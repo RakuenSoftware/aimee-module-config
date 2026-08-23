@@ -236,7 +236,26 @@ var lookupAliases = map[string]string{
 	"aimee_api_client_transport":                    "server_api_client_transport",
 }
 
+// Keys that were removed from the contract and must not surface again, even
+// when an already-persisted document still carries them. Filtering here rather
+// than only rewriting on mutation matters for the UPGRADE path: a deployment
+// where an operator once set the key keeps that line in its aimee.yaml, and
+// without this `config get` would answer for an option that no longer exists --
+// reporting a correctness feature as disabled while it is unconditionally on.
+var retiredKeys = map[string]struct{}{
+	"typed_facts_enabled":    {},
+	"kb_typed_facts_enabled": {},
+}
+
+func retiredKey(key string) bool {
+	_, retired := retiredKeys[normalizeLookupKey(key)]
+	return retired
+}
+
 func publicKey(key string) bool {
+	if retiredKey(key) {
+		return false
+	}
 	_, secret := secretKeys[normalizeLookupKey(key)]
 	return !secret
 }
@@ -476,7 +495,24 @@ func (s *Store) effectiveValuesLocked(root *yaml.Node) map[string]any {
 		}
 	}
 	projectLegacyStructures(out)
+	// The structured projection copies whole sections, so a persisted
+	// kb.typed_facts.enabled reappears inside out["kb"] even though the flat key
+	// is retired. Strip it there too: a caller reading the section would
+	// otherwise still see a gate that no longer exists.
+	stripRetiredTypedFactsEnabled(out)
 	return out
+}
+
+func stripRetiredTypedFactsEnabled(out map[string]any) {
+	kb, ok := out["kb"].(map[string]any)
+	if !ok {
+		return
+	}
+	typedFacts, ok := kb["typed_facts"].(map[string]any)
+	if !ok {
+		return
+	}
+	delete(typedFacts, "enabled")
 }
 
 // callerContractValue retains the numeric enum contract exposed by the public
