@@ -388,6 +388,43 @@ func TestSnapshotVersionAndDynamicDB1Path(t *testing.T) {
 	}
 }
 
+// A deployment that set typed_facts_enabled before it was retired still has the
+// line in its aimee.yaml. It must not come back through the snapshot: answering
+// "false" for a retired gate would report a correctness feature as disabled
+// while it is unconditionally on, which is worse than not answering at all.
+func TestRetiredTypedFactsKeyDoesNotSurviveUpgrade(t *testing.T) {
+	path := filepath.Join(t.TempDir(), "aimee.yaml")
+	if err := os.WriteFile(path,
+		[]byte("typed_facts_enabled: false\nkb:\n  typed_facts:\n    enabled: false\nkeep-me: true\n"),
+		0o600); err != nil {
+		t.Fatal(err)
+	}
+	store, _ := NewStore(path)
+	values, _, err := store.Snapshot()
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, key := range []string{"typed_facts_enabled", "kb_typed_facts_enabled"} {
+		if _, present := values[key]; present {
+			t.Fatalf("retired %s surfaced from a persisted document: %#v", key, values[key])
+		}
+	}
+	// The structured section is projected wholesale, so the nested form has to be
+	// checked separately -- it is a different code path from the flat key.
+	if kb, ok := values["kb"].(map[string]any); ok {
+		if tf, ok := kb["typed_facts"].(map[string]any); ok {
+			if _, present := tf["enabled"]; present {
+				t.Fatalf("retired kb.typed_facts.enabled surfaced: %#v", tf)
+			}
+		}
+	}
+	// Unrelated keys in the same document are untouched, so the filter is
+	// removing one retired key and not eating the file.
+	if values["keep_me"] != true {
+		t.Fatalf("unrelated key was lost: %#v", values)
+	}
+}
+
 func TestAtomicMutationsRemainConsistentUnderConcurrency(t *testing.T) {
 	path := filepath.Join(t.TempDir(), "aimee.yaml")
 	if err := os.WriteFile(path, []byte("typed_facts_enabled: false\nkeep-me: true\n"), 0o600); err != nil {
