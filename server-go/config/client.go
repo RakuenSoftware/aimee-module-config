@@ -72,8 +72,10 @@ type Request struct {
 	PreviousVersion string    `json:"previous_version,omitempty"`
 }
 
+// No Enabled field: the typed-fact layer is unconditional and has no master
+// gate. Removing the field rather than ignoring it means a caller that tries to
+// set one fails to compile instead of being silently disregarded.
 type TypedFactsMutation struct {
-	Enabled          *bool `json:"enabled,omitempty"`
 	AutoPromote      *bool `json:"auto_promote,omitempty"`
 	PromoteThreshold *int  `json:"promote_threshold,omitempty"`
 }
