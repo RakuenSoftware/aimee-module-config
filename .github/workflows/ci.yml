@@ -1,12 +1,16 @@
-name: source-package
+name: module
 on: [push, pull_request]
 permissions:
   contents: read
 jobs:
-  package:
+  linux:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: python3 -m json.tool SOURCE_MANIFEST.json >/dev/null
-      - run: cmake -S . -B build -DCMAKE_INSTALL_PREFIX="$PWD/_prefix"
-      - run: cmake --install build
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '1.25.x'
+      - run: go test ./server-go/bus ./server-go/config ./server-go/modules/config
+      - run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
+      - run: cmake --build build --parallel 2
+      - run: test -x build/aimee-module-config

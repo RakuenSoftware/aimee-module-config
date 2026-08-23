@@ -1,0 +1,1262 @@
+{
+  "version": 1,
+  "fields": [
+    {
+      "key": "provider",
+      "type": "string",
+      "group": "FGROUP_RUNTIME"
+    },
+    {
+      "key": "default_persona",
+      "type": "string",
+      "group": "FGROUP_RUNTIME"
+    },
+    {
+      "key": "claude_model",
+      "type": "string",
+      "group": "FGROUP_RUNTIME"
+    },
+    {
+      "key": "openai_endpoint",
+      "type": "string",
+      "group": "FGROUP_RUNTIME"
+    },
+    {
+      "key": "openai_model",
+      "type": "string",
+      "group": "FGROUP_RUNTIME"
+    },
+    {
+      "key": "openai_key_cmd",
+      "type": "string",
+      "group": "FGROUP_RUNTIME"
+    },
+    {
+      "key": "guardrail_mode",
+      "type": "string",
+      "group": "FGROUP_RUNTIME"
+    },
+    {
+      "key": "embedder_command",
+      "type": "string",
+      "group": "FGROUP_RUNTIME"
+    },
+    {
+      "key": "embedder_model",
+      "type": "string",
+      "group": "FGROUP_RUNTIME"
+    },
+    {
+      "key": "embedder_url",
+      "type": "string",
+      "group": "FGROUP_RUNTIME"
+    },
+    {
+      "key": "embedder_dims",
+      "type": "int",
+      "group": "FGROUP_RUNTIME"
+    },
+    {
+      "key": "kb_mode",
+      "type": "string",
+      "group": "FGROUP_RUNTIME"
+    },
+    {
+      "key": "kb_client_url",
+      "type": "string",
+      "group": "FGROUP_RUNTIME"
+    },
+    {
+      "key": "aimee_with_llamacpp",
+      "type": "string",
+      "group": "FGROUP_RUNTIME"
+    },
+    {
+      "key": "aimee_synthesis_model",
+      "type": "string",
+      "group": "FGROUP_RUNTIME"
+    },
+    {
+      "key": "synthesis_endpoint",
+      "type": "string",
+      "group": "FGROUP_RUNTIME"
+    },
+    {
+      "key": "synthesis_model",
+      "type": "string",
+      "group": "FGROUP_RUNTIME"
+    },
+    {
+      "key": "synthesis_thinking",
+      "type": "bool",
+      "group": "FGROUP_RUNTIME"
+    },
+    {
+      "key": "memory_coref_mode",
+      "type": "string",
+      "group": "FGROUP_RUNTIME"
+    },
+    {
+      "key": "memory_coref_window",
+      "type": "int",
+      "group": "FGROUP_ADVANCED"
+    },
+    {
+      "key": "memory_rerank_mode",
+      "type": "string",
+      "group": "FGROUP_RUNTIME"
+    },
+    {
+      "key": "ingress_preinject_enabled",
+      "type": "bool",
+      "group": "FGROUP_RUNTIME"
+    },
+    {
+      "key": "code_context_mode",
+      "type": "string",
+      "group": "FGROUP_ADVANCED"
+    },
+    {
+      "key": "ingress_preinject_anthropic_enabled",
+      "type": "bool",
+      "group": "FGROUP_ADVANCED"
+    },
+    {
+      "key": "ingress_compress_enabled",
+      "type": "bool",
+      "group": "FGROUP_ADVANCED"
+    },
+    {
+      "key": "ingress_cache_placement_enabled",
+      "type": "bool",
+      "group": "FGROUP_ADVANCED"
+    },
+    {
+      "key": "ingress_compress_min_chars",
+      "type": "int",
+      "group": "FGROUP_ADVANCED"
+    },
+    {
+      "key": "delegates_enabled",
+      "type": "bool",
+      "group": "FGROUP_ADVANCED"
+    },
+    {
+      "key": "prompt_manager_block_enabled",
+      "type": "bool",
+      "group": "FGROUP_ADVANCED"
+    },
+    {
+      "key": "prompt_manager_review_enabled",
+      "type": "bool",
+      "group": "FGROUP_ADVANCED"
+    },
+    {
+      "key": "gateway_prevent_subagents",
+      "type": "bool",
+      "group": "FGROUP_RUNTIME"
+    },
+    {
+      "key": "gateway_pin_model",
+      "type": "bool",
+      "group": "FGROUP_RUNTIME"
+    },
+    {
+      "key": "ingress_preinject_assembly_budget",
+      "type": "int",
+      "group": "FGROUP_RUNTIME"
+    },
+    {
+      "key": "ingress_max_raw_scans",
+      "type": "int",
+      "group": "FGROUP_RUNTIME"
+    },
+    {
+      "key": "code_span_max_lines",
+      "type": "int",
+      "group": "FGROUP_ADVANCED"
+    },
+    {
+      "key": "tool_output_max_bytes",
+      "type": "int",
+      "group": "FGROUP_ADVANCED"
+    },
+    {
+      "key": "require_session_worktree",
+      "type": "bool",
+      "group": "FGROUP_RUNTIME"
+    },
+    {
+      "key": "session_worktree_base",
+      "type": "string",
+      "group": "FGROUP_ADVANCED"
+    },
+    {
+      "key": "pr_base_mode",
+      "type": "string",
+      "group": "FGROUP_ADVANCED"
+    },
+    {
+      "key": "feature_auto_promote",
+      "type": "bool",
+      "group": "FGROUP_ADVANCED"
+    },
+    {
+      "key": "require_aimee_memory",
+      "type": "bool",
+      "group": "FGROUP_RUNTIME"
+    },
+    {
+      "key": "require_aimee_git",
+      "type": "bool",
+      "group": "FGROUP_RUNTIME"
+    },
+    {
+      "key": "subagent_ban_enabled",
+      "type": "bool",
+      "group": "FGROUP_RUNTIME"
+    },
+    {
+      "key": "delegate_sandbox_package_access",
+      "type": "string",
+      "group": "FGROUP_RUNTIME"
+    },
+    {
+      "key": "delegate_sandbox_require_isolation",
+      "type": "bool",
+      "group": "FGROUP_RUNTIME"
+    },
+    {
+      "key": "delegate_sandbox_learn_packages",
+      "type": "bool",
+      "group": "FGROUP_RUNTIME"
+    },
+    {
+      "key": "typed_facts_enabled",
+      "type": "bool",
+      "group": "FGROUP_RUNTIME"
+    },
+    {
+      "key": "memory_typed_facts_speculative_ttl_days",
+      "type": "int",
+      "group": "FGROUP_ADVANCED"
+    },
+    {
+      "key": "memory_typed_facts_promote_threshold",
+      "type": "int",
+      "group": "FGROUP_ADVANCED"
+    },
+    {
+      "key": "kb_pdf_tier",
+      "type": "string",
+      "group": "FGROUP_RUNTIME"
+    },
+    {
+      "key": "kb_pdf_ingest_enabled",
+      "type": "bool",
+      "group": "FGROUP_ADVANCED"
+    },
+    {
+      "key": "kb_pdf_vector_enabled",
+      "type": "bool",
+      "group": "FGROUP_ADVANCED"
+    },
+    {
+      "key": "kb_pdf_tsr_enabled",
+      "type": "bool",
+      "group": "FGROUP_ADVANCED"
+    },
+    {
+      "key": "tsr_command",
+      "type": "string",
+      "group": "FGROUP_RUNTIME"
+    },
+    {
+      "key": "kb_pdf_assets_enabled",
+      "type": "bool",
+      "group": "FGROUP_ADVANCED"
+    },
+    {
+      "key": "kb_pdf_blob_dir",
+      "type": "string",
+      "group": "FGROUP_ADVANCED"
+    },
+    {
+      "key": "kb_pdf_blob_recon_secs",
+      "type": "int",
+      "group": "FGROUP_ADVANCED"
+    },
+    {
+      "key": "kb_pdf_blob_orphan_alarm_mb",
+      "type": "int",
+      "group": "FGROUP_ADVANCED"
+    },
+    {
+      "key": "kb_pdf_ocr_enabled",
+      "type": "bool",
+      "group": "FGROUP_ADVANCED"
+    },
+    {
+      "key": "ocr_command",
+      "type": "string",
+      "group": "FGROUP_RUNTIME"
+    },
+    {
+      "key": "css_style_graph_enabled",
+      "type": "bool",
+      "group": "FGROUP_RUNTIME"
+    },
+    {
+      "key": "code_cochange_git_enabled",
+      "type": "bool",
+      "group": "FGROUP_RUNTIME"
+    },
+    {
+      "key": "wfe_live_forge_enabled",
+      "type": "bool",
+      "group": "FGROUP_RUNTIME"
+    },
+    {
+      "key": "wfe_proposals_autoscan_enabled",
+      "type": "bool",
+      "group": "FGROUP_RUNTIME"
+    },
+    {
+      "key": "client_integrations_enabled",
+      "type": "bool",
+      "group": "FGROUP_RUNTIME"
+    },
+    {
+      "key": "client_tool_transport_preference",
+      "type": "string",
+      "group": "FGROUP_RUNTIME"
+    },
+    {
+      "key": "audit_action_enabled",
+      "type": "bool",
+      "group": "FGROUP_RUNTIME"
+    },
+    {
+      "key": "audit_worm_enabled",
+      "type": "bool",
+      "group": "FGROUP_RUNTIME"
+    },
+    {
+      "key": "css_render_command",
+      "type": "string",
+      "group": "FGROUP_RUNTIME"
+    },
+    {
+      "key": "kb_evidence_emit_enabled",
+      "type": "bool",
+      "group": "FGROUP_RUNTIME"
+    },
+    {
+      "key": "fidelity_check_enabled",
+      "type": "bool",
+      "group": "FGROUP_RUNTIME"
+    },
+    {
+      "key": "memory_query_expansion_mode",
+      "type": "string",
+      "group": "FGROUP_RUNTIME"
+    },
+    {
+      "key": "memory_query_expansion_k",
+      "type": "int",
+      "group": "FGROUP_ADVANCED"
+    },
+    {
+      "key": "kb_fusion_mode",
+      "type": "string",
+      "group": "FGROUP_RUNTIME"
+    },
+    {
+      "key": "kb_fusion_static_alpha",
+      "type": "float",
+      "group": "FGROUP_ADVANCED"
+    },
+    {
+      "key": "autonomous",
+      "type": "bool",
+      "group": "FGROUP_RUNTIME"
+    },
+    {
+      "key": "cross_verify",
+      "type": "bool",
+      "group": "FGROUP_RUNTIME"
+    },
+    {
+      "key": "verify_cmd",
+      "type": "string",
+      "group": "FGROUP_RUNTIME"
+    },
+    {
+      "key": "verify_role",
+      "type": "string",
+      "group": "FGROUP_RUNTIME"
+    },
+    {
+      "key": "verify_prompt",
+      "type": "string",
+      "group": "FGROUP_RUNTIME"
+    },
+    {
+      "key": "max_iterations",
+      "type": "int",
+      "group": "FGROUP_RUNTIME"
+    },
+    {
+      "key": "max_iterations_delegate",
+      "type": "int",
+      "group": "FGROUP_RUNTIME"
+    },
+    {
+      "key": "memory_maintenance_trigger_inserts",
+      "type": "int",
+      "group": "FGROUP_ADVANCED"
+    },
+    {
+      "key": "memory_maintenance_trigger_secs",
+      "type": "int",
+      "group": "FGROUP_ADVANCED"
+    },
+    {
+      "key": "memory_improve_dedupe_enabled",
+      "type": "bool",
+      "group": "FGROUP_ADVANCED"
+    },
+    {
+      "key": "memory_improve_summarise_enabled",
+      "type": "bool",
+      "group": "FGROUP_ADVANCED"
+    },
+    {
+      "key": "memory_profile_cards_enabled",
+      "type": "bool",
+      "group": "FGROUP_ADVANCED"
+    },
+    {
+      "key": "memory_profile_cards_min_obs",
+      "type": "int",
+      "group": "FGROUP_ADVANCED"
+    },
+    {
+      "key": "memory_profile_cards_stale_secs",
+      "type": "int",
+      "group": "FGROUP_ADVANCED"
+    },
+    {
+      "key": "memory_rewrite_enabled",
+      "type": "bool",
+      "group": "FGROUP_RUNTIME"
+    },
+    {
+      "key": "memory_rewrite_command",
+      "type": "string",
+      "group": "FGROUP_RUNTIME"
+    },
+    {
+      "key": "memory_rewrite_hyde",
+      "type": "bool",
+      "group": "FGROUP_ADVANCED"
+    },
+    {
+      "key": "memory_rewrite_decompose",
+      "type": "bool",
+      "group": "FGROUP_ADVANCED"
+    },
+    {
+      "key": "memory_rewrite_max_subqueries",
+      "type": "int",
+      "group": "FGROUP_ADVANCED"
+    },
+    {
+      "key": "memory_window_radius",
+      "type": "int",
+      "group": "FGROUP_ADVANCED"
+    },
+    {
+      "key": "kb_search_max_results",
+      "type": "int",
+      "group": "FGROUP_ADVANCED"
+    },
+    {
+      "key": "memory_negation_enabled",
+      "type": "bool",
+      "group": "FGROUP_RUNTIME"
+    },
+    {
+      "key": "memory_scenes_enabled",
+      "type": "bool",
+      "group": "FGROUP_ADVANCED"
+    },
+    {
+      "key": "memory_bm25_weight",
+      "type": "float",
+      "group": "FGROUP_ADVANCED"
+    },
+    {
+      "key": "code_hybrid_weight_code",
+      "type": "float",
+      "group": "FGROUP_ADVANCED"
+    },
+    {
+      "key": "code_hybrid_weight_graph",
+      "type": "float",
+      "group": "FGROUP_ADVANCED"
+    },
+    {
+      "key": "code_hybrid_weight_vector",
+      "type": "float",
+      "group": "FGROUP_ADVANCED"
+    },
+    {
+      "key": "code_hybrid_weight_memory",
+      "type": "float",
+      "group": "FGROUP_ADVANCED"
+    },
+    {
+      "key": "code_hybrid_rrf_k",
+      "type": "float",
+      "group": "FGROUP_ADVANCED"
+    },
+    {
+      "key": "code_trust_actuation_enabled",
+      "type": "bool",
+      "group": "FGROUP_RUNTIME"
+    },
+    {
+      "key": "code_surprising_precision_floor",
+      "type": "float",
+      "group": "FGROUP_ADVANCED"
+    },
+    {
+      "key": "memory_semantic_weight",
+      "type": "float",
+      "group": "FGROUP_ADVANCED"
+    },
+    {
+      "key": "memory_semantic_floor_scale",
+      "type": "float",
+      "group": "FGROUP_ADVANCED"
+    },
+    {
+      "key": "memory_fetch_budget_enabled",
+      "type": "bool",
+      "group": "FGROUP_ADVANCED"
+    },
+    {
+      "key": "memory_fetch_budget_base",
+      "type": "int",
+      "group": "FGROUP_ADVANCED"
+    },
+    {
+      "key": "memory_fetch_budget_shape_aware",
+      "type": "bool",
+      "group": "FGROUP_ADVANCED"
+    },
+    {
+      "key": "memory_abstain_enabled",
+      "type": "bool",
+      "group": "FGROUP_ADVANCED"
+    },
+    {
+      "key": "memory_abstain_gate",
+      "type": "float",
+      "group": "FGROUP_ADVANCED"
+    },
+    {
+      "key": "memory_chunk_min_confidence",
+      "type": "float",
+      "group": "FGROUP_ADVANCED"
+    },
+    {
+      "key": "memory_hard_negative_log",
+      "type": "string",
+      "group": "FGROUP_ADVANCED"
+    },
+    {
+      "key": "dogfood_enabled",
+      "type": "bool",
+      "group": "FGROUP_DEV"
+    },
+    {
+      "key": "dogfood_log_dir",
+      "type": "string",
+      "group": "FGROUP_DEV"
+    },
+    {
+      "key": "dogfood_commit_raw",
+      "type": "bool",
+      "group": "FGROUP_DEV"
+    },
+    {
+      "key": "dogfood_inline_tagging",
+      "type": "bool",
+      "group": "FGROUP_DEV"
+    },
+    {
+      "key": "dogfood_autolabel_repair",
+      "type": "bool",
+      "group": "FGROUP_DEV"
+    },
+    {
+      "key": "dogfood_autolabel_continuation",
+      "type": "bool",
+      "group": "FGROUP_DEV"
+    },
+    {
+      "key": "dogfood_autolabel_repeat_question",
+      "type": "bool",
+      "group": "FGROUP_DEV"
+    },
+    {
+      "key": "learning_router_enabled",
+      "type": "bool",
+      "group": "FGROUP_RUNTIME"
+    },
+    {
+      "key": "learning_proposal_ttl_days",
+      "type": "int",
+      "group": "FGROUP_ADVANCED"
+    },
+    {
+      "key": "learning_max_commits_per_week",
+      "type": "int",
+      "group": "FGROUP_ADVANCED"
+    },
+    {
+      "key": "learning_implicit_citation_repair",
+      "type": "bool",
+      "group": "FGROUP_ADVANCED"
+    },
+    {
+      "key": "learning_implicit_citation_continuation",
+      "type": "bool",
+      "group": "FGROUP_ADVANCED"
+    },
+    {
+      "key": "learning_implicit_repeat_question",
+      "type": "bool",
+      "group": "FGROUP_ADVANCED"
+    },
+    {
+      "key": "learning_implicit_repeated_correction",
+      "type": "bool",
+      "group": "FGROUP_ADVANCED"
+    },
+    {
+      "key": "learning_implicit_workflow_repetition",
+      "type": "bool",
+      "group": "FGROUP_ADVANCED"
+    },
+    {
+      "key": "learning_implicit_retrieval_outcome",
+      "type": "bool",
+      "group": "FGROUP_ADVANCED"
+    },
+    {
+      "key": "identity_working_profile_injection_enabled",
+      "type": "bool",
+      "group": "FGROUP_RUNTIME"
+    },
+    {
+      "key": "integrity_enabled",
+      "type": "bool",
+      "group": "FGROUP_RUNTIME"
+    },
+    {
+      "key": "integrity_dry_run",
+      "type": "bool",
+      "group": "FGROUP_RUNTIME"
+    },
+    {
+      "key": "virtual_context_enabled",
+      "type": "bool",
+      "group": "FGROUP_RUNTIME"
+    },
+    {
+      "key": "virtual_context_assembly_budget",
+      "type": "int",
+      "group": "FGROUP_RUNTIME"
+    },
+    {
+      "key": "cache_aware_rewrite_enabled",
+      "type": "bool",
+      "group": "FGROUP_RUNTIME"
+    },
+    {
+      "key": "cost_reward_enabled",
+      "type": "bool",
+      "group": "FGROUP_RUNTIME"
+    },
+    {
+      "key": "cost_reward_lambda_pct",
+      "type": "int",
+      "group": "FGROUP_ADVANCED"
+    },
+    {
+      "key": "cost_reward_ref_usd_milli",
+      "type": "int",
+      "group": "FGROUP_RUNTIME"
+    },
+    {
+      "key": "reasoning_cap_enabled",
+      "type": "bool",
+      "group": "FGROUP_RUNTIME"
+    },
+    {
+      "key": "dedup_enabled",
+      "type": "bool",
+      "group": "FGROUP_RUNTIME"
+    },
+    {
+      "key": "cache_shaping_enabled",
+      "type": "bool",
+      "group": "FGROUP_RUNTIME"
+    },
+    {
+      "key": "extended_thinking_enabled",
+      "type": "bool",
+      "group": "FGROUP_RUNTIME"
+    },
+    {
+      "key": "ingress_usage_accounting_enabled",
+      "type": "bool",
+      "group": "FGROUP_ADVANCED"
+    },
+    {
+      "key": "ingress_audit_async",
+      "type": "bool",
+      "group": "FGROUP_RUNTIME"
+    },
+    {
+      "key": "dedup_window_seconds",
+      "type": "int",
+      "group": "FGROUP_RUNTIME"
+    },
+    {
+      "key": "cache_min_chars",
+      "type": "int",
+      "group": "FGROUP_ADVANCED"
+    },
+    {
+      "key": "guardrails_semantic_mode",
+      "type": "string",
+      "group": "FGROUP_RUNTIME"
+    },
+    {
+      "key": "guardrails_blast_radius_advisory_enabled",
+      "type": "bool",
+      "group": "FGROUP_RUNTIME"
+    },
+    {
+      "key": "guardrails_semantic_command",
+      "type": "string",
+      "group": "FGROUP_RUNTIME"
+    },
+    {
+      "key": "guardrails_semantic_warn_threshold",
+      "type": "float",
+      "group": "FGROUP_ADVANCED"
+    },
+    {
+      "key": "guardrails_semantic_prompt_threshold",
+      "type": "float",
+      "group": "FGROUP_ADVANCED"
+    },
+    {
+      "key": "guardrails_semantic_block_threshold",
+      "type": "float",
+      "group": "FGROUP_ADVANCED"
+    },
+    {
+      "key": "kb_api_http_port",
+      "type": "int",
+      "group": "FGROUP_RUNTIME"
+    },
+    {
+      "key": "kb_mining_enabled",
+      "type": "bool",
+      "group": "FGROUP_RUNTIME"
+    },
+    {
+      "key": "kb_mining_min_poll_s",
+      "type": "int",
+      "group": "FGROUP_ADVANCED"
+    },
+    {
+      "key": "verify_enabled",
+      "type": "bool",
+      "group": "FGROUP_RUNTIME"
+    },
+    {
+      "key": "delegate_graph_context_enabled",
+      "type": "bool",
+      "group": "FGROUP_RUNTIME"
+    },
+    {
+      "key": "verify_cross_project",
+      "type": "bool",
+      "group": "FGROUP_RUNTIME"
+    },
+    {
+      "key": "kb_curator_tier",
+      "type": "string",
+      "group": "FGROUP_RUNTIME"
+    },
+    {
+      "key": "kb_curator_extract_docs_enabled",
+      "type": "bool",
+      "group": "FGROUP_ADVANCED"
+    },
+    {
+      "key": "kb_curator_extract_docs_workers",
+      "type": "int",
+      "group": "FGROUP_RUNTIME"
+    },
+    {
+      "key": "kb_curator_stage_order",
+      "type": "string",
+      "group": "FGROUP_ADVANCED"
+    },
+    {
+      "key": "kb_curator_user_presets",
+      "type": "string",
+      "group": "FGROUP_ADVANCED"
+    },
+    {
+      "key": "kb_curator_custom_stages",
+      "type": "string",
+      "group": "FGROUP_ADVANCED"
+    },
+    {
+      "key": "kb_curator_extract_code_enabled",
+      "type": "bool",
+      "group": "FGROUP_ADVANCED"
+    },
+    {
+      "key": "kb_curator_extract_code_workers",
+      "type": "int",
+      "group": "FGROUP_RUNTIME"
+    },
+    {
+      "key": "kb_curator_resolve_entities_enabled",
+      "type": "bool",
+      "group": "FGROUP_ADVANCED"
+    },
+    {
+      "key": "kb_curator_index_narrative_enabled",
+      "type": "bool",
+      "group": "FGROUP_ADVANCED"
+    },
+    {
+      "key": "kb_curator_index_claims_enabled",
+      "type": "bool",
+      "group": "FGROUP_ADVANCED"
+    },
+    {
+      "key": "kb_curator_detect_contradictions_enabled",
+      "type": "bool",
+      "group": "FGROUP_ADVANCED"
+    },
+    {
+      "key": "kb_curator_index_code_unit_enabled",
+      "type": "bool",
+      "group": "FGROUP_ADVANCED"
+    },
+    {
+      "key": "kb_curator_link_artifacts_enabled",
+      "type": "bool",
+      "group": "FGROUP_ADVANCED"
+    },
+    {
+      "key": "kb_curator_projection_graph_enabled",
+      "type": "bool",
+      "group": "FGROUP_ADVANCED"
+    },
+    {
+      "key": "kb_curator_synthesize_enabled",
+      "type": "bool",
+      "group": "FGROUP_ADVANCED"
+    },
+    {
+      "key": "kb_curator_promote_entity_enabled",
+      "type": "bool",
+      "group": "FGROUP_ADVANCED"
+    },
+    {
+      "key": "kb_curator_cross_repo_graph_enabled",
+      "type": "bool",
+      "group": "FGROUP_ADVANCED"
+    },
+    {
+      "key": "kb_evidence_embed_enabled",
+      "type": "bool",
+      "group": "FGROUP_RUNTIME"
+    }
+  ],
+  "sections": {
+    "aimee": [
+      "api"
+    ],
+    "autonomy": [
+      "auto_resume_cap_parks",
+      "ci_retry_max",
+      "concurrency",
+      "fanout",
+      "max_resumes",
+      "max_turns",
+      "max_wall_secs",
+      "skeptics",
+      "stale_abandon_secs",
+      "unit_max",
+      "unit_retry"
+    ],
+    "auxiliary": [
+      "default_max_tokens",
+      "default_model",
+      "default_provider",
+      "enabled",
+      "tasks"
+    ],
+    "cache_shaping": [
+      "enabled",
+      "min_chars"
+    ],
+    "charter": [
+      "hard_constraints",
+      "safety_axioms",
+      "tone_boundaries",
+      "values",
+      "working_profile_drift_limit"
+    ],
+    "compact": [
+      "coord_closet",
+      "enabled",
+      "from_record",
+      "head_bytes",
+      "per_tool",
+      "tail_bytes",
+      "threshold"
+    ],
+    "computer_use": [
+      "allowed_domains",
+      "default_navigation",
+      "enabled",
+      "redact_sensitive_screenshots"
+    ],
+    "concurrency": [
+      "default",
+      "maximum_total_concurrent_agent_sessions",
+      "per_model",
+      "per_provider",
+      "preempt"
+    ],
+    "context": [
+      "engine"
+    ],
+    "cost_reward": [
+      "enabled",
+      "lambda_pct",
+      "ref_usd_milli"
+    ],
+    "cron_jobs": [
+      "context_from",
+      "deliver",
+      "enabled",
+      "id",
+      "mode",
+      "pre_wake_gate",
+      "prompt",
+      "schedule",
+      "script",
+      "skills",
+      "when_context_contains",
+      "workdir"
+    ],
+    "cross_verify": [
+      "enabled",
+      "prompt",
+      "role",
+      "verify_cmd"
+    ],
+    "db2": [
+      "vector"
+    ],
+    "dedup": [
+      "enabled",
+      "window_seconds"
+    ],
+    "dogfood": [
+      "commit_raw",
+      "enabled",
+      "inline_tagging",
+      "log_dir"
+    ],
+    "ensemble": [
+      "aggregator",
+      "max_cost_usd",
+      "min_successful",
+      "reference_models",
+      "reference_personas"
+    ],
+    "extended_thinking": [
+      "enabled"
+    ],
+    "fold": [
+      "enabled",
+      "excerpt_bytes",
+      "freeze",
+      "min_fold_msgs",
+      "recall",
+      "register_enabled",
+      "retained_msgs"
+    ],
+    "guardrails": [
+      "blast_radius",
+      "semantic"
+    ],
+    "identity": [
+      "working_profile_injection"
+    ],
+    "ingress": [
+      "audit_async",
+      "trusted_proxy_secret",
+      "usage_accounting_enabled"
+    ],
+    "integrity": [
+      "dry_run",
+      "enabled"
+    ],
+    "intelligence": [
+      "bandit",
+      "bandit_optimize_command",
+      "calibrate",
+      "constraint_solver_command",
+      "demotion",
+      "kb",
+      "planner",
+      "planner_search_command",
+      "ranker_fuse_command",
+      "ranking",
+      "reasoning",
+      "reasoning_datalog_command",
+      "synthesize"
+    ],
+    "kb": [
+      "api",
+      "background_ingest",
+      "code_hybrid",
+      "connection_pool_size",
+      "connection_workers",
+      "curator",
+      "evidence",
+      "maintenance",
+      "mining",
+      "purge_fence_ttl_s",
+      "reembed_on_dim_change",
+      "search_max_results",
+      "typed_facts",
+      "worker_count"
+    ],
+    "learning": [
+      "embed",
+      "implicit",
+      "review",
+      "router",
+      "synthesize"
+    ],
+    "lsp_servers": [
+      "args",
+      "command",
+      "extensions",
+      "name"
+    ],
+    "mcp": [
+      "osv"
+    ],
+    "mcp_clients": [
+      "bearer_token_env",
+      "command",
+      "cwd",
+      "install",
+      "name",
+      "transport",
+      "url"
+    ],
+    "memory": [
+      "abstain",
+      "aggregation",
+      "bm25_weight",
+      "briefing",
+      "citations",
+      "cognify",
+      "context_budget",
+      "coref",
+      "derive_facts",
+      "directives",
+      "dispositions",
+      "episode_summaries",
+      "failure_detection",
+      "fetch_budget",
+      "hard_negative_log",
+      "improve",
+      "lifecycle",
+      "pagerank",
+      "profile_cards",
+      "prospective",
+      "recall",
+      "rewrite",
+      "routing",
+      "salience",
+      "scenes",
+      "semantic_floor_scale",
+      "semantic_weight",
+      "typed_facts"
+    ],
+    "memory_maintenance": [
+      "enabled",
+      "interval_seconds",
+      "summarize_enabled",
+      "trigger_inserts",
+      "trigger_secs"
+    ],
+    "memory_negation": [
+      "enabled"
+    ],
+    "memory_query_expansion": [
+      "k",
+      "mode"
+    ],
+    "memory_recall_lanes": [
+      "enabled",
+      "fact_kinds",
+      "floor_fact",
+      "floor_summary",
+      "k_fact",
+      "k_summary",
+      "summary_kinds"
+    ],
+    "memory_rewrite": [
+      "command",
+      "decompose",
+      "enabled",
+      "hyde",
+      "max_subqueries"
+    ],
+    "memory_window": [
+      "radius"
+    ],
+    "model_meta": [
+      "capability_routing",
+      "refresh_minutes"
+    ],
+    "otel": [
+      "endpoint",
+      "service_name"
+    ],
+    "reasoning_cap": [
+      "enabled"
+    ],
+    "retry": [
+      "base_ms",
+      "max_attempts",
+      "max_ms"
+    ],
+    "rewind": [
+      "auto_snapshot"
+    ],
+    "roundtable": [
+      "converge_threshold",
+      "deadline_ms",
+      "default",
+      "max_rounds",
+      "pipeline_done_bar",
+      "pipeline_gate_ttl_h",
+      "pipeline_max_attempts_per_pass",
+      "pipeline_max_cost_usd",
+      "pipeline_max_passes",
+      "pipeline_max_total_cost_usd",
+      "pipeline_parked_releases_slot",
+      "pipeline_unknown_context_tokens",
+      "turns"
+    ],
+    "routing": [
+      "enabled",
+      "prefer_local"
+    ],
+    "sandbox": [
+      "allow_paths",
+      "mode",
+      "network"
+    ],
+    "script": [
+      "allowed_tools"
+    ],
+    "search": [
+      "backend",
+      "backends",
+      "fetch_pages",
+      "max_results",
+      "searxng_url",
+      "tavily_api_key"
+    ],
+    "session": [
+      "max_sessions",
+      "max_worktrees",
+      "stale_threshold_secs",
+      "virtual_context"
+    ],
+    "skills": [
+      "capability",
+      "dispatch",
+      "eval",
+      "review"
+    ],
+    "telemetry": [
+      "metrics_token"
+    ],
+    "transport": [
+      "cache_aware_rewrite",
+      "kb_gzip_enabled",
+      "kb_pool_enabled",
+      "server_keepalive_enabled",
+      "thinclient_gzip_enabled"
+    ],
+    "trigger": [
+      "auth_token",
+      "max_concurrent"
+    ],
+    "trigger_rules": [
+      "event",
+      "mode",
+      "pipeline",
+      "schedule",
+      "source"
+    ],
+    "vault": [
+      "custody",
+      "tpm2"
+    ],
+    "workspaces": [
+      "head",
+      "path",
+      "provider",
+      "remote",
+      "sandbox_image"
+    ],
+    "worktree_gc": [
+      "enabled",
+      "max_age_days"
+    ]
+  },
+  "flat": [
+    "db2_pool_size",
+    "economizer",
+    "kb_client_url",
+    "modules",
+    "toolsets"
+  ]
+}

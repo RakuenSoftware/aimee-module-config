@@ -1,0 +1,9 @@
+version=1
+principal_class=1
+principal_ref=2
+uid=self
+executable=@CMAKE_INSTALL_FULL_BINDIR@/aimee-module-config
+publish=
+subscribe=
+request=
+serve=4609
