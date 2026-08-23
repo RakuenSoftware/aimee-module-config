@@ -60,6 +60,42 @@ func TestHandlerRejectsMalformedAndUnknownOperations(t *testing.T) {
 	}
 }
 
+// The typed-fact master gate is retired, so `enabled` is not a settable option.
+// A caller that still sends it must be REFUSED rather than have the field
+// quietly dropped: silently accepting a request to disable a correctness feature
+// and then not disabling it is how an operator ends up believing something about
+// their deployment that is not true.
+func TestHandlerRefusesRetiredTypedFactsEnabled(t *testing.T) {
+	store, _ := NewStore(filepath.Join(t.TempDir(), "aimee.yaml"))
+	handler := NewHandler(store)
+	// The bus status stays OK for an application-level rejection, so the RESPONSE
+	// is what carries the verdict -- checking the status here would pass on a
+	// request that was actually accepted.
+	rejected := invoke(t, handler, configcontract.Request{
+		Operation: configcontract.OpSetTypedFacts,
+		Value: map[string]any{
+			"auto_promote":      false,
+			"enabled":           true,
+			"promote_threshold": 5,
+		},
+	})
+	if rejected.OK {
+		t.Fatal("set-typed-facts accepted a retired `enabled` field")
+	}
+	// The two real knobs still work, so the refusal above is about `enabled` and
+	// not about the operation being broken.
+	accepted := invoke(t, handler, configcontract.Request{
+		Operation: configcontract.OpSetTypedFacts,
+		Value: map[string]any{
+			"auto_promote":      false,
+			"promote_threshold": 5,
+		},
+	})
+	if !accepted.OK {
+		t.Fatalf("set-typed-facts without `enabled` was refused: %+v", accepted)
+	}
+}
+
 func TestHandlerOwnsCompleteProfileLifecycle(t *testing.T) {
 	store, _ := NewStore(filepath.Join(t.TempDir(), "aimee.yaml"))
 	handler := NewHandler(store)

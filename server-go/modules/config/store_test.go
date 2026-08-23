@@ -394,14 +394,22 @@ func TestAtomicMutationsRemainConsistentUnderConcurrency(t *testing.T) {
 		t.Fatal(err)
 	}
 	store, _ := NewStore(path)
-	enabled, promote := true, false
+	promote := false
 	threshold := 7
-	if err := store.SetTypedFacts(TypedFactsMutation{Enabled: &enabled, AutoPromote: &promote,
+	if err := store.SetTypedFacts(TypedFactsMutation{AutoPromote: &promote,
 		PromoteThreshold: &threshold}); err != nil {
 		t.Fatal(err)
 	}
 	values, _, _ := store.Snapshot()
-	if values["typed_facts_enabled"] != true || values["kb_typed_facts_auto_promote_enabled"] != false ||
+	// typed_facts_enabled is NOT asserted here any more, and must not be: the
+	// master gate is retired, so the key is not in defaults, not in metadata, and
+	// not settable. The seed document above still contains it precisely so this
+	// exercises the cleanup -- a stale key in a persisted file must not survive a
+	// grouped mutation.
+	if _, present := values["typed_facts_enabled"]; present {
+		t.Fatalf("retired typed_facts_enabled reappeared in the snapshot: %#v", values)
+	}
+	if values["kb_typed_facts_auto_promote_enabled"] != false ||
 		values["kb_typed_facts_promote_threshold"] != 7 {
 		t.Fatalf("typed-fact mutation was not atomic: %#v", values)
 	}
@@ -420,7 +428,7 @@ func TestAtomicMutationsRemainConsistentUnderConcurrency(t *testing.T) {
 		t.Fatal(err)
 	}
 	values, _, _ = store.Snapshot()
-	if values["typed_facts_enabled"] != true || values["kb_typed_facts_auto_promote_enabled"] != true ||
+	if values["kb_typed_facts_auto_promote_enabled"] != true ||
 		values["kb_typed_facts_promote_threshold"] != 7 {
 		t.Fatalf("partial typed-fact mutation did not preserve siblings: %#v", values)
 	}

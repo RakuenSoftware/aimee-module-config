@@ -206,7 +206,6 @@ var secretKeys = map[string]struct{}{
 // stable accessor names that predate the extraction. Only genuinely irregular
 // mappings belong here; ordinary dotted keys are normalized mechanically.
 var lookupAliases = map[string]string{
-	"kb_typed_facts_enabled":                        "typed_facts_enabled",
 	"kb_typed_facts_auto_promote":                   "kb_typed_facts_auto_promote_enabled",
 	"kb_typed_facts_promote_threshold":              "kb_typed_facts_promote_threshold",
 	"intelligence_calibrate_enabled":                "calibration_enabled",
@@ -828,15 +827,14 @@ func (s *Store) SetTypedFacts(change TypedFactsMutation) error {
 	if typedFacts == nil || typedFacts.Kind != yaml.MappingNode {
 		return errors.New("config path \"kb.typed_facts\" conflicts with a non-mapping value")
 	}
-	if change.Enabled != nil {
-		if err := setEncoded(typedFacts, "enabled", *change.Enabled); err != nil {
-			return err
-		}
-		// The nested KB setting is canonical. Retire the legacy root alias once
-		// this grouped operation takes ownership so parse order cannot make the
-		// persisted document ambiguous.
-		deleteMappingChild(root, "typed_facts_enabled")
-	}
+	// `enabled` is gone: the typed-fact layer has no master gate. It is not
+	// merely defaulted on -- the option is removed, so a deployment cannot be put
+	// back into the state where retraction, recall and class keying are silently
+	// no-ops. Any legacy root alias still sitting in a persisted document is
+	// dropped whenever this grouped operation runs, so an old file cannot keep
+	// re-asserting a setting nothing reads.
+	deleteMappingChild(root, "typed_facts_enabled")
+	deleteMappingChild(typedFacts, "enabled")
 	if change.AutoPromote != nil {
 		if err := setEncoded(typedFacts, "auto_promote", *change.AutoPromote); err != nil {
 			return err
