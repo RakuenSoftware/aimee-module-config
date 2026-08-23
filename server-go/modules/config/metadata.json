@@ -232,11 +232,6 @@
       "group": "FGROUP_RUNTIME"
     },
     {
-      "key": "typed_facts_enabled",
-      "type": "bool",
-      "group": "FGROUP_RUNTIME"
-    },
-    {
       "key": "memory_typed_facts_speculative_ttl_days",
       "type": "int",
       "group": "FGROUP_ADVANCED"

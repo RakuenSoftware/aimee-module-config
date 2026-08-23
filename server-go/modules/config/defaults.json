@@ -326,7 +326,6 @@
 	"review_idle_trigger_minutes":	30,
 	"review_session_cooldown_hours":	24,
 	"review_batch_cap":	10,
-	"typed_facts_enabled":	1,
 	"kb_curator_extract_docs_enabled":	1,
 	"kb_curator_extract_code_enabled":	1,
 	"kb_curator_extract_code_workers":	1,

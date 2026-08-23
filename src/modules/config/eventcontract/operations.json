@@ -44,7 +44,7 @@
     },
     {
       "name": "atomic-typed-facts",
-      "request_json": "{\"operation\":\"set-typed-facts\",\"value\":{\"auto_promote\":false,\"enabled\":true,\"promote_threshold\":5}}",
+      "request_json": "{\"operation\":\"set-typed-facts\",\"value\":{\"auto_promote\":false,\"promote_threshold\":5}}",
       "response_json": "{\"ok\":true}"
     },
     {
