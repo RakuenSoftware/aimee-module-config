@@ -19,18 +19,19 @@ func TestCanonicalNonZeroDefaults(t *testing.T) {
 		t.Fatal(err)
 	}
 	want := map[string]any{
-		"calibration_enabled":         json.Number("1"),
-		"calibration_buckets":         json.Number("10"),
-		"calibration_prior_alpha0":    json.Number("2"),
-		"demotion_enabled":            json.Number("1"),
-		"demotion_window":             json.Number("64"),
-		"bandit_exploration_fraction": json.Number("0.05"),
-		"planner_budget_default":      json.Number("32"),
-		"kb_mdl_tiebreak_enabled":     json.Number("1"),
-		"kb_synthesize_n_attempts":    json.Number("3"),
-		"calibration_prompt_version":  "v1",
-		"calibration_model_version":   "beta-binomial-v1",
-		"kb_fusion_mode":              "rrf",
+		"calibration_enabled":                json.Number("1"),
+		"calibration_buckets":                json.Number("10"),
+		"calibration_prior_alpha0":           json.Number("2"),
+		"demotion_enabled":                   json.Number("1"),
+		"demotion_window":                    json.Number("64"),
+		"bandit_exploration_fraction":        json.Number("0.05"),
+		"planner_budget_default":             json.Number("32"),
+		"kb_mdl_tiebreak_enabled":            json.Number("1"),
+		"kb_synthesize_n_attempts":           json.Number("3"),
+		"kb_mining_failure_learning_enabled": json.Number("1"),
+		"calibration_prompt_version":         "v1",
+		"calibration_model_version":          "beta-binomial-v1",
+		"kb_fusion_mode":                     "rrf",
 	}
 	for key, expected := range want {
 		if got := values[key]; got != expected {

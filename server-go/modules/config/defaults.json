@@ -318,7 +318,7 @@
 	"kb_maintenance_orphan_days":	90,
 	"kb_mining_enabled":	1,
 	"kb_mining_min_poll_s":	300,
-	"kb_mining_failure_learning_enabled":	0,
+	"kb_mining_failure_learning_enabled":	1,
 	"trigger_max_concurrent":	2,
 	"trigger_rule_count":	0,
 	"cron_job_count":	0,
