@@ -490,7 +490,7 @@ func (s *Store) effectiveValuesLocked(root *yaml.Node) map[string]any {
 			continue
 		}
 		var value any
-		if root.Content[i+1].Decode(&value) == nil && publicKey(root.Content[i].Value) {
+		if decodeConfigYAML(root.Content[i+1], &value) == nil && publicKey(root.Content[i].Value) {
 			out[normalizeLookupKey(root.Content[i].Value)] = publicValue(value)
 		}
 	}
@@ -780,20 +780,7 @@ func (s *Store) SetVersioned(key string, value any, previousVersion string) erro
 	if err := validateKeyValue(key, value); err != nil {
 		return err
 	}
-	// The bus decoder preserves JSON numbers so callers do not lose integer
-	// precision. Normalize integral values before YAML encoding; yaml would
-	// otherwise persist json.Number as a quoted string.
-	if encoded, ok := value.(json.Number); ok {
-		if parsed, err := encoded.Int64(); err == nil {
-			value = parsed
-		} else {
-			parsed, floatErr := encoded.Float64()
-			if floatErr != nil || math.IsNaN(parsed) || math.IsInf(parsed, 0) {
-				return fmt.Errorf("%s must be numeric", key)
-			}
-			value = parsed
-		}
-	}
+
 	s.mu.Lock()
 	defer s.mu.Unlock()
 	root, err := s.readStrict()
@@ -825,7 +812,7 @@ func (s *Store) SetVersioned(key string, value any, previousVersion string) erro
 		return errors.New("invalid config key")
 	}
 	valueNode := &yaml.Node{}
-	if err := valueNode.Encode(value); err != nil {
+	if err := encodeConfigYAML(valueNode, value); err != nil {
 		return fmt.Errorf("encode config value: %w", err)
 	}
 	setMappingChild(node, leaf, valueNode)
@@ -1017,7 +1004,7 @@ func decodeStringSlice(root *yaml.Node, key string) ([]string, error) {
 
 func setEncoded(root *yaml.Node, key string, value any) error {
 	node := &yaml.Node{}
-	if err := node.Encode(value); err != nil {
+	if err := encodeConfigYAML(node, value); err != nil {
 		return err
 	}
 	setMappingChild(root, key, node)
@@ -1281,7 +1268,7 @@ func configNodeVersion(node *yaml.Node) string {
 func validateKeyValue(key string, value any) error {
 	if key == "trigger_rules" {
 		node := &yaml.Node{}
-		if err := node.Encode(value); err != nil {
+		if err := encodeConfigYAML(node, value); err != nil {
 			return fmt.Errorf("encode trigger_rules: %w", err)
 		}
 		var rules []TriggerRule
@@ -1586,8 +1573,104 @@ func flatten(node *yaml.Node, prefix string, out map[string]any) {
 			continue
 		}
 		var decoded any
-		if value.Decode(&decoded) == nil {
+		if decodeConfigYAML(value, &decoded) == nil {
 			out[key] = decoded
 		}
 	}
+}
+
+// encodeConfigYAML keeps JSON numbers numeric at every nesting depth. Encoding
+// json.Number through yaml's generic string-kind path would quote it; converting
+// through float64 instead would round integers and precise decimal literals.
+func encodeConfigYAML(node *yaml.Node, value any) error {
+	var result yaml.Node
+	switch typed := value.(type) {
+	case json.Number:
+		raw, err := json.Marshal(typed)
+		if err != nil {
+			return fmt.Errorf("invalid JSON number: %w", err)
+		}
+		result.Kind, result.Tag, result.Value = yaml.ScalarNode, "!!int", string(raw)
+		if strings.ContainsAny(string(raw), ".eE") {
+			result.Tag = "!!float"
+		}
+	case map[string]any:
+		result.Kind, result.Tag = yaml.MappingNode, "!!map"
+		keys := make([]string, 0, len(typed))
+		for key := range typed {
+			keys = append(keys, key)
+		}
+		slices.Sort(keys)
+		for _, key := range keys {
+			child := &yaml.Node{}
+			if err := encodeConfigYAML(child, typed[key]); err != nil {
+				return err
+			}
+			result.Content = append(result.Content, &yaml.Node{Kind: yaml.ScalarNode, Tag: "!!str", Value: key}, child)
+		}
+	case []any:
+		result.Kind, result.Tag = yaml.SequenceNode, "!!seq"
+		for _, value := range typed {
+			child := &yaml.Node{}
+			if err := encodeConfigYAML(child, value); err != nil {
+				return err
+			}
+			result.Content = append(result.Content, child)
+		}
+	default:
+		if err := result.Encode(value); err != nil {
+			return err
+		}
+	}
+	*node = result
+	return nil
+}
+
+// decodeConfigYAML preserves numeric JSON spelling when the generic YAML
+// decoder would round it or reject its range. Existing exactly represented Go
+// scalars keep their types. Legacy YAML aliases, merges and non-JSON scalars
+// retain the YAML decoder's existing behavior.
+func decodeConfigYAML(node *yaml.Node, out *any) error {
+	if node.Kind == yaml.ScalarNode && node.Value != "" && (node.Tag == "!!int" || node.Tag == "!!float") {
+		number := json.Number(node.Value)
+		if raw, err := json.Marshal(number); err == nil {
+			var decoded any
+			if node.Decode(&decoded) == nil {
+				if encoded, err := json.Marshal(decoded); err == nil && string(encoded) == string(raw) {
+					*out = decoded
+					return nil
+				}
+			}
+			*out = number
+			return nil
+		}
+	}
+	if node.Kind == yaml.SequenceNode {
+		values := make([]any, len(node.Content))
+		for i, child := range node.Content {
+			if err := decodeConfigYAML(child, &values[i]); err != nil {
+				return err
+			}
+		}
+		*out = values
+		return nil
+	}
+	if node.Kind == yaml.MappingNode {
+		for i := 0; i+1 < len(node.Content); i += 2 {
+			if node.Content[i].Tag != "!!str" || node.Content[i].Value == "<<" {
+				return node.Decode(out)
+			}
+		}
+		values := make(map[string]any, len(node.Content)/2)
+		for i := 0; i+1 < len(node.Content); i += 2 {
+			var value any
+			if err := decodeConfigYAML(node.Content[i+1], &value); err != nil {
+				return err
+			}
+			values[node.Content[i].Value] = value
+		}
+		*out = values
+		return nil
+	}
+	return node.Decode(out)
 }
