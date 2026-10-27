@@ -9,8 +9,8 @@ import (
 	"os/signal"
 	"syscall"
 
-	"github.com/RakuenSoftware/aimee-module-config/server-go/bus"
 	handler "github.com/RakuenSoftware/aimee-module-config/server-go/modules/config"
+	"github.com/RakuenSoftware/ouroboros-ring/go/ring"
 )
 
 func printDefaultValue(key string, output io.Writer) error {
@@ -75,15 +75,15 @@ func main() {
 	}
 	ctx, stop := signal.NotifyContext(context.Background(), syscall.SIGINT, syscall.SIGTERM)
 	defer stop()
-	config := bus.ModuleProcessConfig{
+	config := ring.ModuleProcessConfig{
 		SocketPath: os.Args[1], ModuleName: "config",
 		PrincipalClass: 1, PrincipalRef: 2,
-		Stages: []bus.ModuleStage{
+		Stages: []ring.ModuleStage{
 			{EventKind: 4609, StageID: 1},
 		},
 		Handler: moduleHandler,
 	}
-	if err := bus.RunModuleProcess(ctx, config); err != nil {
+	if err := ring.RunModuleProcess(ctx, config); err != nil {
 		fmt.Fprintf(os.Stderr, "aimee-module-config: %v\n", err)
 		os.Exit(1)
 	}

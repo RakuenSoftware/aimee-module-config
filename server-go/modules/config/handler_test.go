@@ -5,18 +5,18 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/RakuenSoftware/aimee-module-config/server-go/bus"
 	configcontract "github.com/RakuenSoftware/aimee-module-config/server-go/config"
+	"github.com/RakuenSoftware/ouroboros-ring/go/ring"
 )
 
-func invoke(t *testing.T, handler bus.ModuleHandler, request configcontract.Request) configcontract.Response {
+func invoke(t *testing.T, handler ring.ModuleHandler, request configcontract.Request) configcontract.Response {
 	t.Helper()
 	body, err := json.Marshal(request)
 	if err != nil {
 		t.Fatal(err)
 	}
-	reply, status := handler(bus.ModuleInvocation{StageID: configcontract.StageConfig}, body)
-	if status != bus.ModuleStatusOK {
+	reply, status := handler(ring.ModuleInvocation{StageID: configcontract.StageConfig}, body)
+	if status != ring.ModuleStatusOK {
 		t.Fatalf("status = %d", status)
 	}
 	var response configcontract.Response
@@ -47,11 +47,11 @@ func TestHandlerOwnsReadMutationAndVersioning(t *testing.T) {
 func TestHandlerRejectsMalformedAndUnknownOperations(t *testing.T) {
 	store, _ := NewStore(filepath.Join(t.TempDir(), "aimee.yaml"))
 	handler := NewHandler(store)
-	if _, status := handler(bus.ModuleInvocation{StageID: configcontract.StageConfig}, []byte("{")); status != bus.ModuleStatusInvalidRequest {
+	if _, status := handler(ring.ModuleInvocation{StageID: configcontract.StageConfig}, []byte("{")); status != ring.ModuleStatusInvalidRequest {
 		t.Fatalf("malformed status = %d", status)
 	}
-	if _, status := handler(bus.ModuleInvocation{StageID: configcontract.StageConfig},
-		[]byte("{\"operation\":\"values\"}{}")); status != bus.ModuleStatusInvalidRequest {
+	if _, status := handler(ring.ModuleInvocation{StageID: configcontract.StageConfig},
+		[]byte("{\"operation\":\"values\"}{}")); status != ring.ModuleStatusInvalidRequest {
 		t.Fatalf("trailing payload status = %d", status)
 	}
 	response := invoke(t, handler, configcontract.Request{Operation: "unknown"})

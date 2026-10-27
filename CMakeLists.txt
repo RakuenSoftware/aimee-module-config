@@ -14,15 +14,6 @@ add_custom_command(
         ${CMAKE_CURRENT_SOURCE_DIR}/runtime/main_test.go
         ${CMAKE_CURRENT_SOURCE_DIR}/server-go/modules/config/handler.go
         ${CMAKE_CURRENT_SOURCE_DIR}/server-go/modules/config/store.go
-        ${CMAKE_CURRENT_SOURCE_DIR}/server-go/bus/client.go
-        ${CMAKE_CURRENT_SOURCE_DIR}/server-go/bus/client_connect.go
-        ${CMAKE_CURRENT_SOURCE_DIR}/server-go/bus/geometry.go
-        ${CMAKE_CURRENT_SOURCE_DIR}/server-go/bus/module_caller.go
-        ${CMAKE_CURRENT_SOURCE_DIR}/server-go/bus/module_protocol.go
-        ${CMAKE_CURRENT_SOURCE_DIR}/server-go/bus/module_runtime.go
-        ${CMAKE_CURRENT_SOURCE_DIR}/server-go/bus/region.go
-        ${CMAKE_CURRENT_SOURCE_DIR}/server-go/bus/ring.go
-        ${CMAKE_CURRENT_SOURCE_DIR}/server-go/bus/wire.go
         ${CMAKE_CURRENT_SOURCE_DIR}/server-go/config/client.go
         ${CMAKE_CURRENT_SOURCE_DIR}/server-go/config/client_test.go
         ${CMAKE_CURRENT_SOURCE_DIR}/server-go/config/contract_test.go

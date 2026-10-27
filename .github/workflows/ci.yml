@@ -9,8 +9,8 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-go@v5
         with:
-          go-version: '1.25.x'
-      - run: go test ./server-go/bus ./server-go/config ./server-go/modules/config
+          go-version-file: go.mod
+      - run: go test ./server-go/config ./server-go/modules/config ./runtime
       - run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
       - run: cmake --build build --parallel 2
       - run: test -x build/aimee-module-config

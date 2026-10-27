@@ -8,37 +8,37 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/RakuenSoftware/aimee-module-config/server-go/bus"
 	configcontract "github.com/RakuenSoftware/aimee-module-config/server-go/config"
+	"github.com/RakuenSoftware/ouroboros-ring/go/ring"
 )
 
 // NewHandler serves the complete config store contract. The Store owns all
 // parsing, validation, versioning, and persistence; the handler only translates
 // the language-neutral event payload.
-func NewHandler(store *Store) bus.ModuleHandler {
-	return func(invocation bus.ModuleInvocation, body []byte) ([]byte, bus.ModuleStatus) {
+func NewHandler(store *Store) ring.ModuleHandler {
+	return func(invocation ring.ModuleInvocation, body []byte) ([]byte, ring.ModuleStatus) {
 		if invocation.StageID != configcontract.StageConfig || store == nil {
-			return nil, bus.ModuleStatusInvalidRequest
+			return nil, ring.ModuleStatusInvalidRequest
 		}
 		if invocation.Cancelled() {
-			return nil, bus.ModuleStatusCancelled
+			return nil, ring.ModuleStatusCancelled
 		}
 		var request configcontract.Request
 		decoder := json.NewDecoder(strings.NewReader(string(body)))
 		decoder.UseNumber()
 		decoder.DisallowUnknownFields()
 		if err := decoder.Decode(&request); err != nil || request.Operation == "" {
-			return nil, bus.ModuleStatusInvalidRequest
+			return nil, ring.ModuleStatusInvalidRequest
 		}
 		if err := decoder.Decode(&struct{}{}); err != io.EOF {
-			return nil, bus.ModuleStatusInvalidRequest
+			return nil, ring.ModuleStatusInvalidRequest
 		}
 		response := handleRequest(store, request)
 		encoded, err := json.Marshal(response)
-		if err != nil || uint32(len(encoded)) > bus.ModuleMessageMaxBody {
-			return nil, bus.ModuleStatusInternal
+		if err != nil || uint32(len(encoded)) > ring.ModuleMessageMaxBody {
+			return nil, ring.ModuleStatusInternal
 		}
-		return encoded, bus.ModuleStatusOK
+		return encoded, ring.ModuleStatusOK
 	}
 }
 
@@ -59,7 +59,7 @@ func DefaultPath() (string, error) {
 	return filepath.Join(home, "aimee.yaml"), nil
 }
 
-func NewDefaultHandler() (bus.ModuleHandler, error) {
+func NewDefaultHandler() (ring.ModuleHandler, error) {
 	path, err := DefaultPath()
 	if err != nil {
 		return nil, err
