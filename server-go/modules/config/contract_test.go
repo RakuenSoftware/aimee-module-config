@@ -6,8 +6,8 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/RakuenSoftware/aimee-module-config/server-go/bus"
 	configcontract "github.com/RakuenSoftware/aimee-module-config/server-go/config"
+	"github.com/RakuenSoftware/ouroboros-ring/go/ring"
 )
 
 func TestHandlerConformsToOwnedEventContract(t *testing.T) {
@@ -39,9 +39,9 @@ func TestHandlerConformsToOwnedEventContract(t *testing.T) {
 			if err != nil {
 				t.Fatal(err)
 			}
-			reply, status := NewHandler(store)(bus.ModuleInvocation{StageID: document.StageID},
+			reply, status := NewHandler(store)(ring.ModuleInvocation{StageID: document.StageID},
 				[]byte(vector.RequestJSON))
-			if status != bus.ModuleStatusOK || string(reply) != vector.ResponseJSON {
+			if status != ring.ModuleStatusOK || string(reply) != vector.ResponseJSON {
 				t.Fatalf("response = %s (status %d), want %s", reply, status, vector.ResponseJSON)
 			}
 		})
