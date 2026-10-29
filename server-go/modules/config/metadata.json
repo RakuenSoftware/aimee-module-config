@@ -222,11 +222,6 @@
       "group": "FGROUP_RUNTIME"
     },
     {
-      "key": "delegate_sandbox_require_isolation",
-      "type": "bool",
-      "group": "FGROUP_RUNTIME"
-    },
-    {
       "key": "delegate_sandbox_learn_packages",
       "type": "bool",
       "group": "FGROUP_RUNTIME"
@@ -374,26 +369,6 @@
     {
       "key": "autonomous",
       "type": "bool",
-      "group": "FGROUP_RUNTIME"
-    },
-    {
-      "key": "cross_verify",
-      "type": "bool",
-      "group": "FGROUP_RUNTIME"
-    },
-    {
-      "key": "verify_cmd",
-      "type": "string",
-      "group": "FGROUP_RUNTIME"
-    },
-    {
-      "key": "verify_role",
-      "type": "string",
-      "group": "FGROUP_RUNTIME"
-    },
-    {
-      "key": "verify_prompt",
-      "type": "string",
       "group": "FGROUP_RUNTIME"
     },
     {
@@ -970,12 +945,6 @@
       "skills",
       "when_context_contains",
       "workdir"
-    ],
-    "cross_verify": [
-      "enabled",
-      "prompt",
-      "role",
-      "verify_cmd"
     ],
     "db2": [
       "vector"

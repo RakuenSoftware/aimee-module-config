@@ -245,6 +245,16 @@ var lookupAliases = map[string]string{
 var retiredKeys = map[string]struct{}{
 	"typed_facts_enabled":    {},
 	"kb_typed_facts_enabled": {},
+	// Delegate cross-verification and the skill-change evaluation gate left with
+	// the native layers that read them; the options configured nothing after.
+	"cross_verify":             {},
+	"verify_cmd":               {},
+	"verify_role":              {},
+	"verify_prompt":            {},
+	"skills_eval_gate_enabled": {},
+	"skills_eval_threshold":    {},
+	// Isolation is unconditional, so this toggle never had an effect to keep.
+	"delegate_sandbox_require_isolation": {},
 }
 
 func retiredKey(key string) bool {
@@ -774,6 +784,9 @@ func (s *Store) Set(key string, value any) error {
 }
 
 func (s *Store) SetVersioned(key string, value any, previousVersion string) error {
+	if retiredKey(key) {
+		return fmt.Errorf("config key %q is retired and configures nothing", key)
+	}
 	if !publicKey(key) {
 		return errors.New("credential keys are owned by the runtime secret store")
 	}
