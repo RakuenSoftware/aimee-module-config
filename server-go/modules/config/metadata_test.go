@@ -41,7 +41,7 @@ func TestMetadataBacksLegacyScalarMutations(t *testing.T) {
 	for key, value := range map[string]any{
 		"guardrail_mode":                     "warn",
 		"embedder_command":                   "embed",
-		"cross_verify":                       true,
+		"autonomous":                         true,
 		"max_iterations":                     json.Number("42"),
 		"guardrails_semantic_warn_threshold": json.Number("0.5"),
 	} {

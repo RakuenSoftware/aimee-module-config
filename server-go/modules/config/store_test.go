@@ -426,6 +426,36 @@ func TestRetiredTypedFactsKeyDoesNotSurviveUpgrade(t *testing.T) {
 	}
 }
 
+// Options whose readers were removed must not report a state nothing enforces,
+// and must not be settable again.
+func TestRetiredOptionsDoNotSurfaceOrAcceptWrites(t *testing.T) {
+	path := filepath.Join(t.TempDir(), "aimee.yaml")
+	if err := os.WriteFile(path, []byte("cross_verify: true\nverify_cmd: make test\n"+
+		"skills_eval_gate_enabled: false\ndelegate_sandbox_require_isolation: false\n"+
+		"cross_verify_section_untouched: 1\n"), 0o600); err != nil {
+		t.Fatal(err)
+	}
+	store, _ := NewStore(path)
+	values, _, err := store.Snapshot()
+	if err != nil {
+		t.Fatal(err)
+	}
+	retired := []string{"cross_verify", "verify_cmd", "verify_role", "verify_prompt",
+		"skills_eval_gate_enabled", "skills_eval_threshold", "delegate_sandbox_require_isolation"}
+	for _, key := range retired {
+		if _, present := values[key]; present {
+			t.Fatalf("retired %s surfaced: %#v", key, values[key])
+		}
+		err := store.Set(key, true)
+		if err == nil || !strings.Contains(err.Error(), "retired") {
+			t.Fatalf("Set(%q) = %v, want a retired-key refusal", key, err)
+		}
+	}
+	if values["cross_verify_section_untouched"] != 1 {
+		t.Fatalf("unrelated key was lost: %#v", values)
+	}
+}
+
 func TestAtomicMutationsRemainConsistentUnderConcurrency(t *testing.T) {
 	path := filepath.Join(t.TempDir(), "aimee.yaml")
 	if err := os.WriteFile(path, []byte("typed_facts_enabled: false\nkeep-me: true\n"), 0o600); err != nil {
