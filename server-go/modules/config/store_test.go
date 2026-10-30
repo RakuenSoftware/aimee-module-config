@@ -2,6 +2,7 @@ package config
 
 import (
 	"encoding/json"
+	"fmt"
 	"os"
 	"path/filepath"
 	"strings"
@@ -741,5 +742,47 @@ func TestMalformedReloadKeepsLastGoodSnapshotAndRejectsMutations(t *testing.T) {
 	value, err = store.Value("feature_auto_promote")
 	if err != nil || value != false {
 		t.Fatalf("recovered snapshot: value=%#v err=%v", value, err)
+	}
+}
+
+// A full registry makes room only from server-local workspaces that are gone.
+// A detached workspace's path is the client's and never exists on the server,
+// so pruning it by a local stat dropped every detached workspace at once.
+func TestAFullRegistryKeepsClientWorkspaces(t *testing.T) {
+	dir := t.TempDir()
+	store, err := NewStore(filepath.Join(dir, "aimee.yaml"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	for i := 0; i < maxWorkspaces-1; i++ {
+		change := WorkspaceMutation{Path: fmt.Sprintf("/client/repo-%d", i), Provider: "detached"}
+		if err := store.WorkspaceAdd(change); err != nil {
+			t.Fatal(err)
+		}
+	}
+	gone := filepath.Join(dir, "gone")
+	if err := store.WorkspaceAdd(WorkspaceMutation{Path: gone}); err != nil {
+		t.Fatal(err)
+	}
+	// Full: the next add may drop the vanished server-local one, and only it.
+	if err := store.WorkspaceAdd(WorkspaceMutation{Path: "/client/new", Provider: "detached"}); err != nil {
+		t.Fatal(err)
+	}
+	values, _, err := store.Snapshot()
+	if err != nil {
+		t.Fatal(err)
+	}
+	paths, _ := values["workspaces"].([]any)
+	if len(paths) != maxWorkspaces {
+		t.Fatalf("%d workspaces after the add, want %d", len(paths), maxWorkspaces)
+	}
+	for _, path := range paths {
+		if path == gone {
+			t.Fatal("the vanished server-local workspace was kept")
+		}
+	}
+	// Full of client workspaces only: refuse rather than drop one.
+	if err := store.WorkspaceAdd(WorkspaceMutation{Path: "/client/one-more", Provider: "detached"}); err == nil {
+		t.Fatal("a registry full of client workspaces accepted another by dropping one")
 	}
 }

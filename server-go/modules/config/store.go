@@ -1096,10 +1096,17 @@ func (s *Store) WorkspaceAdd(change WorkspaceMutation) error {
 		return errors.New("workspace already exists")
 	}
 	if len(paths) >= maxWorkspaces {
+		// Make room by dropping server-local workspaces whose directory is gone.
+		// Only a shared workspace (no provider) lives on this filesystem: a
+		// detached or mirror workspace's path is the client's, so it never
+		// exists here, and judging it by a stat here dropped every one of them
+		// whenever the registry filled.
 		keptPaths, keptProviders, keptRemotes, keptHeads := []string{}, []string{}, []string{}, []string{}
 		for i, registered := range paths {
-			if _, statErr := os.Stat(registered); errors.Is(statErr, os.ErrNotExist) {
-				continue
+			if providers[i] == "" {
+				if _, statErr := os.Stat(registered); errors.Is(statErr, os.ErrNotExist) {
+					continue
+				}
 			}
 			keptPaths = append(keptPaths, registered)
 			keptProviders = append(keptProviders, providers[i])
