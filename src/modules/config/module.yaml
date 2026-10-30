@@ -10,9 +10,11 @@
   "ownership_complete": true,
   "go_sources": [
     "server-go/modules/config/handler.go",
-    "server-go/modules/config/store.go"
+    "server-go/modules/config/store.go",
+    "server-go/modules/config/watch_linux.go"
   ],
   "go_tests": [
+    "server-go/modules/config/change_test.go",
     "server-go/modules/config/contract_test.go",
     "server-go/modules/config/handler_test.go",
     "server-go/modules/config/store_test.go"

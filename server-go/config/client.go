@@ -20,6 +20,10 @@ const (
 	// 4096 + 2*256 + stage ordinal 1.
 	EventConfig uint32 = 4609
 	StageConfig uint32 = 1
+	// EventConfigChanged is the config-changed notification (ouroboros ring
+	// D14): 4096 + 2*256 + 2, published after every committed change with the
+	// new document version, so a caller can cache instead of asking.
+	EventConfigChanged uint32 = 4610
 
 	MaxTriggerRules            = 32
 	MinAutonomyMaxWallSecs     = 360

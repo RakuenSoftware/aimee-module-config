@@ -31,6 +31,21 @@ values, wrong stages, and oversized replies fail closed. Validation errors stay
 inside a successful bus reply as typed `code`/`error` data because a non-OK
 bus status intentionally carries no body.
 
+## Change notifications
+
+After every change it commits, the module publishes `config-changed` (event
+kind `4610`, carved from principal ref 2 as stage-space id 2) with the new
+document version as `{"version": "<sha256>"}`: the same version `version` and
+`snapshot` report. An edit made to the file outside the module, by an operator's
+editor or a restored backup, is announced the same way: the module watches the
+file's directory with inotify, so nothing polls it. A version already announced
+is not announced again, and only the newest pending version is sent.
+
+A caller that subscribes caches what it reads and drops the cache when the
+version changes, or when the ring reports it missed a notification
+(`overflow`), instead of asking for the version on a timer. The notification
+is capture-only: the write it announces already has its durable row.
+
 ## Storage and startup
 
 Only the module resolves its file. `AIMEE_CONFIG_PATH` selects an explicit

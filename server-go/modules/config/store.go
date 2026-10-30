@@ -140,6 +140,23 @@ type Store struct {
 	path     string
 	mu       sync.Mutex
 	lastGood *yaml.Node
+	// changed is told the document version after every committed write, and
+	// after Watch notices an edit made outside the module. Called with mu
+	// held, so it must not block or call back into the store.
+	changed func(version string)
+}
+
+// OnChange registers fn to be told the document version after each change.
+func (s *Store) OnChange(fn func(version string)) {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	s.changed = fn
+}
+
+func (s *Store) announceLocked(version string) {
+	if s.changed != nil {
+		s.changed(version)
+	}
 }
 
 // defaultsJSON is generated once from the last native configuration release's
@@ -1266,6 +1283,10 @@ func (s *Store) writeLocked(root *yaml.Node) error {
 		return err
 	}
 	s.lastGood = cloneYAMLNode(root)
+	// Announce the version a reader will compute, from the bytes now on disk.
+	if written, err := s.read(); err == nil {
+		s.announceLocked(configNodeVersion(written))
+	}
 	return nil
 }
 
